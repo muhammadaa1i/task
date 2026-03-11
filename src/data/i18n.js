@@ -9,11 +9,15 @@ export const languageOptions = [
   { code: 'ru', label: 'RU' },
 ]
 
+const storedLanguage =
+  typeof window !== 'undefined' ? window.localStorage.getItem('i18nextLng') : null
+
 i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
     resources,
+    lng: storedLanguage || 'uz',
     fallbackLng: 'uz',
     supportedLngs: ['uz', 'en', 'ru'],
     nonExplicitSupportedLngs: true,
@@ -25,7 +29,7 @@ i18n
       useSuspense: false,
     },
     detection: {
-      order: ['localStorage', 'navigator', 'htmlTag'],
+      order: ['localStorage'],
       caches: ['localStorage'],
       lookupLocalStorage: 'i18nextLng',
     },
